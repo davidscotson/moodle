@@ -115,7 +115,7 @@ class core_scss extends \ScssPhp\ScssPhp\Compiler {
 
         if (!empty($pathtosassc) && is_executable($pathtosassc) && !is_dir($pathtosassc)) {
             $process = proc_open(
-                $pathtosassc . ' -I' . implode(':', $this->importPaths) . ' -s',
+                $pathtosassc . ' -t compressed -I' . implode(':', $this->importPaths) . ' -s',
                 [
                     ['pipe', 'r'], // Set the process stdin pipe to read mode.
                     ['pipe', 'w'], // Set the process stdout pipe to write mode.
@@ -143,6 +143,7 @@ class core_scss extends \ScssPhp\ScssPhp\Compiler {
             }
         }
 
+        $this->setFormatter('ScssPhp\ScssPhp\Formatter\Compressed');
         return parent::compile($code, $path);
     }
 
